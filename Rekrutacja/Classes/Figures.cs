@@ -10,9 +10,10 @@ namespace Rekrutacja.Classes
         abstract public class Shape
         {
             public double[] sides;
-            abstract public string InputFormat { get; }
+            public abstract string InputFormat { get; }
 
             public abstract double Area();
+            
         }
 
         public class Rectangle : Shape

@@ -75,12 +75,12 @@
                     </asp:DataList>
                 </div>
                 <div style="margin:0px 40px">
-                    <asp:DataList ID="IndividualOrdersList" DataSource='<%# GetSelectedTable() %>' runat="server">
+                    <asp:DataList CssClass='<%# GetVisibility(GetTablesFromSession()[TableList.SelectedIndex].AmountTotal) %>' ID="IndividualOrdersList" DataSource='<%# GetSelectedTable() %>' runat="server">
                         <HeaderTemplate>
                             <asp:Label runat="server" Text='<%# "<b>Edycja Stolika " + TableList.SelectedValue +"</b>" %>'></asp:Label>
                         </HeaderTemplate>
                         <ItemTemplate>
-                            <asp:Table CssClass='<%# GetVisibility((double)Eval("AmountTotal")) %>' runat="server" BorderStyle="Solid" GridLines="Both">
+                            <asp:Table runat="server" BorderStyle="Solid" GridLines="Both">
                                 <asp:TableRow>
                                     <asp:TableCell>
                                         <asp:DataList DataSource='<%# GetSelectedTable()[0].Orders %>' runat="server">
@@ -111,7 +111,7 @@
                                         </asp:DataList>
                                     </asp:TableCell>
                                 </asp:TableRow>
-                                <asp:TableRow CssClass='<%# GetVisibility((double)Eval("AmountTotal")) %>'>
+                                <asp:TableRow>
                                     <asp:TableCell>
                                         <div style="display:flex; justify-content:space-between">
                                             <div>
