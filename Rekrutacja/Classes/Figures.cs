@@ -12,10 +12,7 @@ namespace Rekrutacja.Classes
             public double[] sides;
             abstract public string InputFormat { get; }
 
-            public virtual double Area()
-            {
-                return 0;
-            }
+            public abstract double Area();
         }
 
         public class Rectangle : Shape
