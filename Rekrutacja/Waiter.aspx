@@ -22,12 +22,12 @@
             <asp:Panel ID="OrderPanel" runat="server" >
                 <div style="display: flex; flex-direction:row">
                     <div style="display:flex; flex-direction:column">
-                        <asp:DropDownList ID="DishList" DataValueField="Id" DataTextField="Name" AutoPostBack="true" runat="server"></asp:DropDownList>
+                        <asp:DropDownList ID="DishList" DataValueField="Id" DataTextField="Name" AutoPostBack="true" OnSelectedIndexChanged="UpdateOrderLabel" runat="server"></asp:DropDownList>
                         <asp:Label ID="UnitPrice" runat="server" Text='<%#"Cena: " 
                                 + GetDishesFromSession()[DishList.SelectedIndex].Cost + " zł"%>'></asp:Label>
                     </div>
                     <div style="display:flex; flex-direction:column; margin:0px 10px">
-                        <asp:DropDownList ID="AmountBox" runat="server" AutoPostBack="true">
+                        <asp:DropDownList ID="AmountBox" runat="server" AutoPostBack="true" OnSelectedIndexChanged="UpdateOrderLabel">
                             <asp:ListItem Value="1">1</asp:ListItem>
                             <asp:ListItem Value="2">2</asp:ListItem>
                             <asp:ListItem Value="3">3</asp:ListItem>
@@ -45,7 +45,7 @@
         </div>
     
         <asp:Panel ID="DetailsPanel" runat="server">
-            <div style="display:flex; flex-direction:row">
+            <div style="display:flex; margin-top:20px; flex-direction:row">
                 <div>
                     <asp:Table BorderStyle="Solid" GridLines="Both" runat ="server">
                         <asp:TableRow>
@@ -104,7 +104,7 @@
                                                         </asp:DropDownList>
                                                     </asp:TableCell>
                                                     <asp:TableCell>
-                                                        <asp:Button runat="server" OnClick="DeleteOrder_Click" Text="Usuń" />
+                                                        <asp:Button runat="server" OnClick="DeleteOrder_Click" Text="X" />
                                                     </asp:TableCell>
                                                 </asp:TableRow>
                                             </ItemTemplate>
@@ -113,7 +113,14 @@
                                 </asp:TableRow>
                                 <asp:TableRow CssClass='<%# GetVisibility((double)Eval("AmountTotal")) %>'>
                                     <asp:TableCell>
-                                        <asp:Button  ID="PayButton" runat="server" Text="Zapłać" OnClick="PayButton_Click" />
+                                        <div style="display:flex; justify-content:space-between">
+                                            <div>
+                                                <asp:Button  ID="DeleteButton" runat="server" Text="Usuń" OnClick="DeleteAllOrders" />
+                                            </div>
+                                            <div>
+                                                <asp:Button  ID="PayButton" runat="server" Text="Zapłać" OnClick="PayButton_Click" />
+                                            </div>
+                                        </div>
                                     </asp:TableCell>
                                 </asp:TableRow>
                             </asp:Table>

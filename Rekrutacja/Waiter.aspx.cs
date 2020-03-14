@@ -99,6 +99,31 @@ namespace Rekrutacja
         }
         #endregion
 
+        protected void AddOrderButton_Click(object sender, EventArgs e)
+        {
+            List<Restaurant.Table> sessiontables = GetTablesFromSession();
+            if (sessiontables[TableList.SelectedIndex].Orders == null)
+            {
+                sessiontables[TableList.SelectedIndex].Orders = new List<Restaurant.Order>();
+            }
+            Restaurant.Order order = new Restaurant.Order
+            {
+                Dish = GetDishesFromSession()[DishList.SelectedIndex],
+                Amount = Convert.ToInt32(AmountBox.SelectedValue),
+            };
+            if (sessiontables[TableList.SelectedIndex].Orders.Count() == 0)
+            {
+                order.Id = 1;
+            }
+            else
+            {
+                order.Id = sessiontables[TableList.SelectedIndex].Orders.LastOrDefault().Id + 1;
+            }
+            sessiontables[TableList.SelectedIndex].Orders.Add(order);
+            Session["availableTables"] = sessiontables;
+            Page.DataBind();
+        }
+
         #region page helper functions
         public List<Restaurant.Table> GetSelectedTable()
         {
@@ -115,41 +140,17 @@ namespace Rekrutacja
             return style;
         }
 
-        public double GetTip()
+        protected void TableList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            return GetTablesFromSession()[TableList.SelectedIndex].AmountTotal * 1.05;
+            Page.DataBind();
         }
 
-        public double GetTotalCost()
+        protected void UpdateOrderLabel(object sender, EventArgs e)
         {
-            return GetTablesFromSession()[TableList.SelectedIndex].AmountTotal + GetTip();
+            Page.DataBind();
         }
 
         #endregion
-        protected void AddOrderButton_Click(object sender, EventArgs e)
-        {
-            List<Restaurant.Table> sessiontables = GetTablesFromSession();
-            if(sessiontables[TableList.SelectedIndex].Orders == null)
-            {
-                sessiontables[TableList.SelectedIndex].Orders = new List<Restaurant.Order>();
-            }
-            Restaurant.Order order = new Restaurant.Order
-            {
-                Dish = GetDishesFromSession()[DishList.SelectedIndex],
-                Amount = Convert.ToInt32(AmountBox.SelectedValue),
-            };
-            if(sessiontables[TableList.SelectedIndex].Orders.Count() == 0)
-            {
-                order.Id = 1;
-            }
-            else
-            {
-                order.Id = sessiontables[TableList.SelectedIndex].Orders.LastOrDefault().Id + 1;
-            }
-            sessiontables[TableList.SelectedIndex].Orders.Add(order);
-            Session["availableTables"] = sessiontables;
-            Page.DataBind();
-        }
 
         #region edit order
         protected void DeleteOrder_Click(object sender, EventArgs e)
@@ -160,6 +161,14 @@ namespace Rekrutacja
             changedTables[TableList.SelectedIndex].Orders.Remove(changedOrder);
             Session["availableTables"] = changedTables;
 
+            Page.DataBind();
+        }
+
+        protected void DeleteAllOrders(object sender, EventArgs e)
+        {
+            List<Restaurant.Table> changedTables = GetTablesFromSession();
+            changedTables[TableList.SelectedIndex].Orders.Clear();
+            Session["availableTables"] = changedTables;
             Page.DataBind();
         }
 
@@ -185,11 +194,7 @@ namespace Rekrutacja
         }
         #endregion
 
-        protected void TableList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Page.DataBind();
-        }
-
+        #region summary functions
         public void DisplaySummary()
         {
             SummaryList.DataSource = GetTablesFromSession()[TableList.SelectedIndex].Orders;
@@ -199,7 +204,17 @@ namespace Rekrutacja
         protected void PayButton_Click(object sender, EventArgs e)
         {
             DisplaySummary();
-            
         }
+
+        public double GetTip()
+        {
+            return GetTablesFromSession()[TableList.SelectedIndex].AmountTotal * 0.05;
+        }
+
+        public double GetTotalCost()
+        {
+            return GetTablesFromSession()[TableList.SelectedIndex].AmountTotal + GetTip();
+        }
+        #endregion
     }
 }

@@ -22,7 +22,7 @@ namespace Rekrutacja.Classes
         {
             public override string InputFormat
             {
-                get { return "Format: Bok 1\\Bok2 (Przykład: 5,2\\2,0)"; }
+                get { return "Format: Bok 1\\Bok2 (Przykład: 5,2\\2)"; }
             }
             public override double Area()
             {
@@ -34,7 +34,7 @@ namespace Rekrutacja.Classes
         {
             public override string InputFormat
             {
-                get { return "Format: Podstawa\\Wysokość (Przykład: 5,2\\2,0)"; }
+                get { return "Format: Podstawa\\Wysokość (Przykład: 5,2\\2)"; }
             }
             public override double Area()
             {
@@ -45,7 +45,7 @@ namespace Rekrutacja.Classes
         public class Trapeze : Shape
         {
             public override string InputFormat {
-                get { return "Format: Podstawa 1\\Podstawa 2\\Wysokość (Przykład: 5,0\\2,0\\3,5)"; } 
+                get { return "Format: Podstawa 1\\Podstawa 2\\Wysokość (Przykład: 5,0\\2,0\\3)"; } 
             }
             public override double Area()
             {
@@ -59,7 +59,7 @@ namespace Rekrutacja.Classes
             {
                 get
                 {
-                    return "Format: Podstawa\\Wysokość (Przykład: 5,2\\2,0)";
+                    return "Format: Podstawa\\Wysokość (Przykład: 5,2\\2)";
                 }
             }
             public override double Area()
@@ -74,7 +74,7 @@ namespace Rekrutacja.Classes
             {
                 get
                 {
-                    return "Format: Promień (Przykład: 5,2)";
+                    return "Format: Promień (Przykład: 5)";
                 }
             }
             public override double Area()
